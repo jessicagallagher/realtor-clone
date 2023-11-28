@@ -82,7 +82,7 @@ export default function CreateListing() {
             type='button'
             id='type'
             value='sale'
-            onChange={onChange}
+            onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
               type === 'rent'
                 ? 'bg-white text-black'
@@ -95,7 +95,7 @@ export default function CreateListing() {
             type='button'
             id='type'
             value='rent'
-            onChange={onChange}
+            onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
               type === 'sale'
                 ? 'bg-white text-black'
@@ -151,7 +151,7 @@ export default function CreateListing() {
             type='button'
             id='parking'
             value={true}
-            onChange={onChange}
+            onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
               !parking ? 'bg-white text-black' : 'bg-slate-600 text-white'
             }`}
@@ -162,7 +162,7 @@ export default function CreateListing() {
             type='button'
             id='parking'
             value={false}
-            onChange={onChange}
+            onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
               parking ? 'bg-white text-black' : 'bg-slate-600 text-white'
             }`}
@@ -187,7 +187,7 @@ export default function CreateListing() {
             type='button'
             id='furnished'
             value={false}
-            onChange={onChange}
+            onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
               furnished ? 'bg-white text-black' : 'bg-slate-600 text-white'
             }`}
@@ -251,7 +251,7 @@ export default function CreateListing() {
             type='button'
             id='offer'
             value={true}
-            onChange={onChange}
+            onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
               !offer ? 'bg-white text-black' : 'bg-slate-600 text-white'
             }`}
@@ -262,7 +262,7 @@ export default function CreateListing() {
             type='button'
             id='offer'
             value={false}
-            onChange={onChange}
+            onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${
               offer ? 'bg-white text-black' : 'bg-slate-600 text-white'
             }`}

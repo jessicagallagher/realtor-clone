@@ -68,6 +68,42 @@ export default function CreateListing() {
     }
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    if (+discountedPrice >= +regularPrice) {
+      setLoading(false);
+      toast.error('Discounted price needs to be less than regular price');
+      return;
+    }
+    if (images.length > 6) {
+      setLoading(false);
+      toast.error('Maximum 6 images are allowed');
+      return;
+    }
+    let geolocation = {};
+    let location;
+    if (geolocationEnabled) {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
+      );
+      const data = await response.json();
+      console.log(data);
+      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+      location = data.status === 'ZERO_RESULTS' && undefined;
+      if (location === undefined) {
+        setLoading(false);
+        toast.error('Please enter a correct address');
+        return;
+      } else {
+        geolocation.lat = latitude;
+        geolocation.lng = longitude;
+      }
+    }
+  };
+
   if (loading) {
     return <Spinner />;
   }
@@ -75,7 +111,7 @@ export default function CreateListing() {
   return (
     <main className='max-w-md px-2 mx-auto'>
       <h1 className='text-3xl text-center mt-6 font-bold'>Create a Listing</h1>
-      <form>
+      <form onSubmit={onSubmit}>
         <p className='text-lg mt-6 font-semibold'>Sell / Rent</p>
         <div className='flex'>
           <button
@@ -271,7 +307,7 @@ export default function CreateListing() {
           </button>
         </div>
         <div className='flex items-center mb-6'>
-          <div className=''>
+          <div>
             <p className='text-lg font-semibold'>Regular price</p>
             <div className='flex w-full justify-center items-center space-x-6'>
               <input

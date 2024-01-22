@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { db } from '../firebase';
+import ListingItem from '../components/ListingItem';
 
 export default function Profile() {
   const auth = getAuth();
@@ -42,6 +43,7 @@ export default function Profile() {
   const onSubmit = async () => {
     try {
       if (auth.currentUser.displayName !== name) {
+        // update display name in auth
         await updateProfile(auth.currentUser, {
           displayName: name,
         });
@@ -57,27 +59,27 @@ export default function Profile() {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchUserListings = async () => {
-  //     const listingRef = collection(db, 'listings');
-  //     const q = query(
-  //       listingRef,
-  //       where('userRef', '==', auth.currentUser.uid),
-  //       orderBy('timestamp', 'desc')
-  //     );
-  //     const querySnap = await getDocs(q);
-  //     let listings = [];
-  //     querySnap.forEach((doc) => {
-  //       return listings.push({
-  //         id: doc.id,
-  //         data: doc.data(),
-  //       });
-  //     });
-  //     setListings(listings);
-  //     setLoading(false);
-  //   };
-  //   fetchUserListings();
-  // }, [auth.currentUser.uid]);
+  useEffect(() => {
+    const fetchUserListings = async () => {
+      const listingRef = collection(db, 'listings');
+      const q = query(
+        listingRef,
+        where('userRef', '==', auth.currentUser.uid),
+        orderBy('timestamp', 'desc')
+      );
+      const querySnap = await getDocs(q);
+      let listings = [];
+      querySnap.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+      setListings(listings);
+      setLoading(false);
+    };
+    fetchUserListings();
+  }, [auth.currentUser.uid]);
 
   const onDelete = async (listingID) => {
     if (window.confirm('Are you sure you want to delete?')) {
@@ -158,12 +160,24 @@ export default function Profile() {
         </div>
       </section>
       <div className='max-w-6xl px-3 mt-6 mx-auto'>
-        <>
-          <h2 className='text-2xl text-center font-semibold mb-6'>
-            My Listings
-          </h2>
-          <ul className='sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'></ul>
-        </>
+        {!loading && listings.length > 0 && (
+          <>
+            <h2 className='text-2xl text-center font-semibold mb-6'>
+              My Listings
+            </h2>
+            <ul className='sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
+              {listings.map((listing) => (
+                <ListingItem
+                  key={listing.id}
+                  id={listing.id}
+                  listing={listing.data}
+                  onDelete={() => onDelete(listing.id)}
+                  onEdit={() => onEdit(listing.id)}
+                />
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     </>
   );

@@ -21,7 +21,7 @@ import 'swiper/css/bundle';
 import { getAuth } from 'firebase/auth';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import Spinner from '../components/Spinner';
-// import Contact from '../components/Contact';
+import Contact from '../components/Contact';
 
 export default function Listing() {
   const auth = getAuth();
@@ -146,9 +146,9 @@ export default function Listing() {
               </button>
             </div>
           )}
-          {/* {contactLandlord && (
+          {contactLandlord && (
             <Contact userRef={listing.userRef} listing={listing} />
-          )} */}
+          )}
         </div>
         <div className='w-full h-[200px] md:h-[400px] z-10 overflow-x-hidden mt-6 md:mt-0 md:ml-2'>
           <MapContainer

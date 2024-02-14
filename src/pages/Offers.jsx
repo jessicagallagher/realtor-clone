@@ -9,7 +9,6 @@ import {
   startAfter,
   where,
 } from 'firebase/firestore';
-import { async } from '@firebase/util';
 import { db } from '../firebase';
 import Spinner from '../components/Spinner';
 import ListingItem from '../components/ListingItem';
